@@ -66,6 +66,9 @@ func main() {
 		r.Delete("/{id}", app.DeleteAStudent)
 		r.Post("/", app.CreateStudent)
 	})
+	r.Route("/guardian", func(r chi.Router) {
+
+	})
 
 	server := &http.Server{
 		Addr:    *port,
