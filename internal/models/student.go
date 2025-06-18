@@ -8,5 +8,5 @@ type Student struct {
 	LastName  string
 	Gender    string
 	Age       uint8
-	Guardian  *string
+	Guardian  *int
 }

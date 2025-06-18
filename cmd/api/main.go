@@ -67,7 +67,12 @@ func main() {
 		r.Post("/", app.CreateStudent)
 	})
 	r.Route("/guardian", func(r chi.Router) {
-
+		r.Get("/", app.GetAllGuardians)
+		r.Get("/{id}", app.GetAGuardian)
+		r.Get("/student/{id}", app.GetAGuardianStudent)
+		r.Post("/", app.CreateGuardian)
+		r.Delete("/{id}", app.DeleteGuardian)
+		r.Put("/{id}", app.UpdateGuardian)
 	})
 
 	server := &http.Server{

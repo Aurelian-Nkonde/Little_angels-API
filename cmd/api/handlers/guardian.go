@@ -38,17 +38,19 @@ func (app *App) GetAGuardian(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid parameter", http.StatusBadRequest)
 		return
 	}
+
 	var guardian models.Guardian
-	result := app.Db.Find(&guardian, id)
-	if result.Error == gorm.ErrRecordNotFound {
-		log.Println("guardian is not found", result.Error)
-		http.Error(w, "guardia id not found", http.StatusNotFound)
-		return
-	}
+	result := app.Db.First(&guardian, id)
 	if result.Error != nil {
-		log.Println("Error getting a guardian", result.Error)
-		http.Error(w, "error getting a  guardian", http.StatusInternalServerError)
-		return
+		if result.Error == gorm.ErrRecordNotFound {
+			log.Println("guardian is not found", result.Error)
+			http.Error(w, "guardian is not found", http.StatusNotFound)
+			return
+		} else {
+			log.Println("Error getting a guardian", result.Error)
+			http.Error(w, "error getting a  guardian", http.StatusInternalServerError)
+			return
+		}
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
